@@ -1,16 +1,36 @@
-class Courier {
-    onMessage(callback) {
+
+export class Courier {
+    constructor() {
+        this.subscriptions = new Map();
         self.onmessage = async ({ ports, data }) => {
             const [port] = ports;
-            const result = await callback.call(self, data);
+            const { event, payload, kind } = data;
+
+            if (!event && !kind) {
+                const result = this.default && await this.default.call(self, data);
+                port.postMessage(result);
+                return;
+            }
+
+            const callback = this.subscriptions.get(event);
+            const result = await callback(payload);
             port.postMessage(result);
         }
+    }
+
+    on(event, callback) {
+        this.subscriptions.set(event, callback)
+    }
+
+    default(callback) {
+        this.default = callback;
     }
 }
 
 export default class PostMaster {
     constructor(worker) {
         this.worker = worker;
+        this.subscriptions = new Map()
     }
 
     post(payload) {
@@ -25,5 +45,17 @@ export default class PostMaster {
         })
     }
 
-    static Courier = Courier
+    subscribe(event, callback) {
+        const eventSubcribers = this.subscriptions.get(event) || new Set();
+        if (!this.subscriptions.has(event)) this.subscriptions.set(event, eventSubcribers)
+        eventSubcribers.add(callback);
+    }
+
+    async emit(event, payload) {
+        const result = await this.post({ event, payload, kind: 'emit' });
+        const eventSubcribers = this.subscriptions.get(event);
+        if (!eventSubcribers) return result;
+        eventSubcribers.forEach(callback => callback.call(null, result));
+        return result
+    }
 }

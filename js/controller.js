@@ -5,7 +5,7 @@ const view = new Worker('js/view.js', { type: 'module' });
 
 const master = new PostMaster(view);
 
-setTimeout(() => {
-    master.post('foo1').then(response => console.log({ response }))
-})
-master.post('foo2').then(response => console.log({ response }))
+
+master.subscribe('foo', (data) => { console.log('bar', { data }) });
+console.log(master)
+master.emit('foo', { fizz: "buzz" })
