@@ -1,4 +1,4 @@
-# PostMaster
+# ReactiveAsyncWorker
 
 Wrapper for browsers `postMessage` API for communicating with other entities.
 
@@ -7,9 +7,9 @@ Wrapper for browsers `postMessage` API for communicating with other entities.
 ```javascript
 // client.js
 
-import PostMaster from 'postmaster';
+import ReactiveAsyncWorker from 'ReactiveAsyncWorker';
 const worker = new Worker('worker.js', { type: 'module' });
-const client = new PostMaster(worker);
+const client = new ReactiveAsyncWorker(worker);
 
 // emit event with payload to worker
 client.emit('ping', { foo: 'bar' });
@@ -26,17 +26,18 @@ console.log(result); // 'pong'
 
 ```javascript
 // worker.js
-import { Courier } from 'postmaster';
+import { Messenger } from 'ReactiveAsyncWorker';
 
-const courier = new Courier();
+const messenger = new Messenger();
 
-courier.on('ping', (data) => {
+// Worker only registers a single handler for event, if multiple are registered old is overwritten
+messenger.on('ping', (data) => {
   console.log(data); // {foo:'bar'}
   return 'pong';
 });
 
 // default callback is called when no event handler is found, event is the default postMessage event.data
-courier.default((data) => {
+messenger.default((data) => {
     console.log('No logic here')
 });
 ```

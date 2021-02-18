@@ -1,5 +1,5 @@
 
-export class Courier {
+export class Messenger {
     constructor() {
         this.subscriptions = new Map();
         self.onmessage = async ({ ports, data }) => {
@@ -19,6 +19,9 @@ export class Courier {
     }
 
     on(event, callback) {
+        if(this.subscriptions.has(event)){
+            console.warn(`Overwriting existing eventhandler for ${event}. Hope you know what you're doing.`)
+        }
         this.subscriptions.set(event, callback)
     }
 
@@ -27,7 +30,7 @@ export class Courier {
     }
 }
 
-export default class PostMaster {
+export default class ReactiveAsyncWorker {
     constructor(worker) {
         this.worker = worker;
         this.subscriptions = new Map()

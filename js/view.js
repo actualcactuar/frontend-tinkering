@@ -1,15 +1,14 @@
-import { Courier } from '/js/lib/PostMaster.js'
+import { Messenger } from '/js/lib/ReactiveAsyncWorker.js'
 
-const courier = new Courier();
+const messenger = new Messenger();
 
-courier.default((data) => {
-    console.log(data);
+messenger.default((data) => {
     return "reached default message handler"
 })
 
-courier.on('foo', () => {
+messenger.on('foo', () => {
     return 'piupau'
 })
 
 
-console.log('hello from view!', self);
+console.log('hello from view!');
