@@ -10,5 +10,9 @@ messenger.on('foo', () => {
     return 'piupau'
 })
 
-
+messenger.on('share', (buffer) => {
+    const int32 = new Int32Array(buffer);
+    Atomics.wait(int32,0,5);
+    console.log(int32)
+})
 console.log('hello from view!');
