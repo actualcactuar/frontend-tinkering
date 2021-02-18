@@ -1,5 +1,5 @@
-import PostMasterGeneral from '/js/lib/PostMasterGeneral.js'
-const courier = new PostMasterGeneral.Courier();
+import PostMaster from '/js/lib/PostMaster.js'
+const courier = new PostMaster.Courier();
 
 console.log('hello from view!', self);
 
