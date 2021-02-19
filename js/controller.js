@@ -1,17 +1,17 @@
-import ReactiveAsyncWorker from '/js/lib/ReactiveAsyncWorker.js'
+import { ClientScope } from '/js/lib/BetterWorker.js'
+import { State } from '/js/lib/State.js'
 
-const model = new Worker('js/model.js', { type: 'module' });
-const view = new Worker('js/view.js', { type: 'module' });
+const model = new ClientScope('js/model.js', { type: 'module' });
+const view = new ClientScope('js/view.js', { type: 'module' });
 
-const client = new ReactiveAsyncWorker(view);
+view.execute('foo').then(result => console.log({ result }))
 
+view.on('foo', (data) => {
+    console.log({ data })
+});
 
-client.subscribe('foo', (data) => { console.log('bar', { data }) });
-client.emit('foo', { fizz: "buzz" })
-
-const buffer = new SharedArrayBuffer(1024);
-client.emit('share', buffer);
-
-const int32 = new Int32Array(buffer); 
-Atomics.store(int32,0, 123);
-Atomics.notify(int32,0, 1);
+const state = new State("asd");
+state.subscribe(value => {
+    console.log('STATE VALUE', value);
+})
+state.set("foo");

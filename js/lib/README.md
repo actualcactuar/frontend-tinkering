@@ -1,4 +1,4 @@
-# ReactiveAsyncWorker
+# BetterPostMessage
 
 Wrapper for browsers `postMessage` API for communicating with other entities.
 
@@ -7,9 +7,9 @@ Wrapper for browsers `postMessage` API for communicating with other entities.
 ```javascript
 // client.js
 
-import ReactiveAsyncWorker from 'ReactiveAsyncWorker';
+import { Client } from 'BetterPostMessage';
 const worker = new Worker('worker.js', { type: 'module' });
-const client = new ReactiveAsyncWorker(worker);
+const client = new Client(worker);
 
 // emit event with payload to worker
 client.emit('ping', { foo: 'bar' });
@@ -26,18 +26,18 @@ console.log(result); // 'pong'
 
 ```javascript
 // worker.js
-import { Messenger } from 'ReactiveAsyncWorker';
+import { Endpoint } from 'BetterPostMessage';
 
-const messenger = new Messenger();
+const endpoint = new Endpoint();
 
 // Worker only registers a single handler for event, if multiple are registered old is overwritten
-messenger.on('ping', (data) => {
+endpoint.on('ping', (data) => {
   console.log(data); // {foo:'bar'}
   return 'pong';
 });
 
 // default callback is called when no event handler is found, event is the default postMessage event.data
-messenger.default((data) => {
-    console.log('No logic here')
+endpoint.default((data) => {
+  console.log('No logic here');
 });
 ```
