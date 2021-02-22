@@ -12,11 +12,13 @@
     <div id="app">
       <proto-elem>
         <template>
-          <p data-bind="innerText::foo"></p>
-          <p data-bind="innerText::test"></p>
+          <p data-inner-text="foo"></p>
+          <p data-inner-text="test"></p>
+          <input data-oninput="handleInput" data-value="inputValue">
+          <p data-inner-text="inputValue"></p>
           <button
-            data-action="onclick::handleClick"
-            data-bind="innerText::button"
+            data-onclick="handleClick"
+            data-inner-text="button"
           ></button>
         </template>
       </proto-elem>

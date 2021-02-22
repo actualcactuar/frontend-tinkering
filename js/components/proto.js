@@ -7,7 +7,12 @@ export class Proto extends Component {
     }
 
     handleClick() {
+        console.log('CLICK')
         this.state.set(state => ({ ...state, foo: 'test', button: 'update label!' }));
+    }
+
+    handleInput(event) {
+        this.appendState({ inputValue: event.target.value });
     }
 
 }

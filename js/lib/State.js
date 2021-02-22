@@ -9,6 +9,11 @@ export class State {
         this.subscriptions.forEach(callback => typeof callback === 'function' && callback(this.value))
     }
 
+    get(key){
+       if(key) return key && this.value[key] || null;
+       return this.value;
+    }
+
     unsubscribe(callback) {
         this.subscriptions.delete(callback);
     }

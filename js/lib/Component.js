@@ -4,6 +4,19 @@ export class Component extends HTMLElement {
     constructor() {
         super();
         this.useTemplate();
+        this.memo = new Map();
+    }
+
+    setState(value) {
+        this.state.set(value);
+    }
+
+    appendState(value) {
+        if (!(typeof value === 'object') || !(typeof this.state === 'object')) {
+            console.warn(`State and value need to be spreadable in order to append`);
+        }
+
+        this.state.set(state => ({ ...state, ...value }))
     }
 
     useState(value) {
@@ -24,23 +37,44 @@ export class Component extends HTMLElement {
 
         const templateClone = this.template.content.cloneNode(true);
 
-        templateClone.querySelectorAll(`[data-bind]`).forEach(elem => {
-            const { bind } = elem.dataset;
-            console.log(elem.dataset)
-            const [attr, key] = bind.split('::').map(slice => slice.trim());
-            elem[attr] = this.state && this.state.value[key] || `WARNING: Unbound key "${key}"`;
-        })
+        const bindTemplateDatasets = (childElementHtmlCollection) => {
+            for (const childNode of childElementHtmlCollection) {
+                // console.log(childNode, childNode.dataset)
+                for (const [attr, key] of Object.entries(childNode.dataset)) {
+                    // console.log(attr, childNode[attr], this[key], this.state.get(key))
 
-        
-        templateClone.querySelectorAll(`[data-action]`).forEach(elem => {
-            const { action } = elem.dataset;
-            const [attr, key] = action.split('::').map(slice => slice.trim());
-            elem[attr] = this[key].bind(this) || console.warn(`WARNING: Unbound key "${key}"`);
-        })
+                    if (/^on/.test(attr)) { // look for eventhandler in components class methods
+                        if (!this.memo.has(key)) {
+                            this.memo.set(key, this[key].bind(this));
+                        }
+                        if (childNode[attr] !== this.memo.get(key)) {
+                            console.log({ attr, key });
+                            childNode[attr] = this.memo.get(key);
+                        }
+                    } else { // use components state
 
-        const [, ...elements] = this.children;
-        elements.forEach(child => this.removeChild(child));
-        this.appendChild(templateClone);
+                        if (childNode[attr] !== this.state.get(key)) {
+                            console.log({ attr, key });
+                            childNode[attr] = this.state.get(key);
+
+                        }
+                    }
+                }
+                if (childNode.children.length) {
+                    bindTemplateDatasets(childNode.children);
+                }
+            }
+
+        }
+
+
+        const [, ...children] = this.children;
+        if (!children.length) {
+            bindTemplateDatasets(templateClone.children)
+            this.appendChild(templateClone);
+        } else {
+            bindTemplateDatasets(children)
+        }
     }
 }
 
