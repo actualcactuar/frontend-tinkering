@@ -5,7 +5,7 @@ export class State {
     }
 
     set(value) {
-        this.value = value;
+        this.value = typeof value === 'function' ? value(this.value) : value;
         this.subscriptions.forEach(callback => callback( this.value))
     }
 

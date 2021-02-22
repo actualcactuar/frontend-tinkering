@@ -15,3 +15,4 @@ state.subscribe(value => {
     console.log('STATE VALUE', value);
 })
 state.set("foo");
+state.set(value => value.concat("asdasdasd"))

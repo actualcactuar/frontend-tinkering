@@ -16,13 +16,8 @@ export default class EventEmitter {
     }
 
     emit(event, ...args) {
-        const eventCallbacks = this.subscriptions.get(event);
-        if (!eventCallbacks) return;
-
-        for (const callback of eventCallbacks) {
-            callback(...args)
-        }
-
+        if (!this.subscriptions.has(event)) return;
+        this.subscriptions.get(event).forEach(callback => callback(...args))
     }
 
     static once(target, event) {
