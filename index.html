@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link href="css/main.css" rel="stylesheet">
-    <base href="/">
-</head>
-<body>
-    <div id="app"></div>
+    <link href="css/main.css" rel="stylesheet" />
+    <base href="/" />
+  </head>
+  <body>
+    <div id="app">
+      <proto-elem>
+        <template>
+          <p data-bind="innerText::foo"></p>
+          <p data-bind="innerText::test"></p>
+          <button
+            data-action="onclick::handleClick"
+            data-bind="innerText::button"
+          ></button>
+        </template>
+      </proto-elem>
+    </div>
+    <script type="module" defer src="js/components/index.js"></script>
     <script type="module" defer src="js/controller.js"></script>
-</body>
+  </body>
 </html>
