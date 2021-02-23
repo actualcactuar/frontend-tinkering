@@ -3,7 +3,8 @@ import { State } from './State.js';
 export class Component extends HTMLElement {
     constructor() {
         super();
-        this.useTemplate();
+        const [template] = this.getElementsByTagName('template');
+        this.template = template;
         this.memo = new Map();
     }
 
@@ -23,11 +24,6 @@ export class Component extends HTMLElement {
         this.state = new State(value);
         this.state.subscribe(this.render.bind(this));
         return this.state;
-    }
-
-    useTemplate() {
-        const [template] = this.getElementsByTagName('template');
-        this.template = template;
     }
 
     render() {
