@@ -16,14 +16,12 @@ export class Component extends HTMLElement {
         if (!(typeof value === 'object') || !(typeof this.state === 'object')) {
             console.warn(`State and value need to be spreadable in order to append`);
         }
-
         this.state.set(state => ({ ...state, ...value }))
     }
 
-    useState(value) {
+    initState(value) {
         this.state = new State(value);
         this.state.subscribe(this.render.bind(this));
-        return this.state;
     }
 
     render() {
@@ -31,6 +29,7 @@ export class Component extends HTMLElement {
             throw new Error("Template and sate are required for render");
         };
 
+        console.log(this.state)
         const templateClone = this.template.content.cloneNode(true);
 
         const bindTemplateDatasets = (childElementHtmlCollection) => {
@@ -38,23 +37,32 @@ export class Component extends HTMLElement {
                 // console.log(childNode, childNode.dataset)
                 for (const [attr, key] of Object.entries(childNode.dataset)) {
                     // console.log(attr, childNode[attr], this[key], this.state.get(key))
+                    
+                    if (this[key] || this.state.get(key)) {
+                        if (typeof this[key] === 'function') { // look for eventhandler in components class methods
+                            if (!this.memo.has(key)) {
+                                this.memo.set(key, this[key].bind(this));
+                            }
+                            if (childNode[attr] !== this.memo.get(key)) {
+                                console.log({ attr, key });
+                                childNode[attr] = this.memo.get(key);
+                            }
+                        } else { // use components state
+                            if (childNode[attr] !== this.state.get(key)) {
+                                console.log({ attr, key });
+                                childNode[attr] = this.state.get(key);
 
-                    if (/^on/.test(attr)) { // look for eventhandler in components class methods
-                        if (!this.memo.has(key)) {
-                            this.memo.set(key, this[key].bind(this));
+                            }
                         }
-                        if (childNode[attr] !== this.memo.get(key)) {
-                            console.log({ attr, key });
-                            childNode[attr] = this.memo.get(key);
-                        }
-                    } else { // use components state
-
-                        if (childNode[attr] !== this.state.get(key)) {
-                            console.log({ attr, key });
-                            childNode[attr] = this.state.get(key);
-
+                    } else if (key.match('::')) {
+                        const keys = key.split('::');
+                        const data = keys.reduce((acc, curr) => acc && acc[curr] || this.state.get(curr), null);
+                        if (data && typeof data !== 'object' && childNode[attr] !== data) {
+                            childNode[attr] = data;
                         }
                     }
+
+
                 }
                 if (childNode.children.length) {
                     bindTemplateDatasets(childNode.children);

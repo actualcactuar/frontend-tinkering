@@ -3,12 +3,12 @@ import { Component } from '/js/lib/Component.js'
 export class Proto extends Component {
     constructor() {
         super();
-        this.useState({ foo: 'bar', test: 'asd', button: 'button label!' });
+        this.initState({ foo: 'bar', test: 'asd', button: 'button label!', objectValue: { foo: 'babababaaa' } });
     }
 
     handleClick() {
         console.log('CLICK')
-        this.appendState({foo: 'test', button: 'update label!' });
+        this.appendState({ foo: 'test', button: 'update label!' });
     }
 
     handleInput(event) {
