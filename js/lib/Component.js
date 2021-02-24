@@ -10,6 +10,7 @@ export class Component extends HTMLElement {
 
     appendState(value) {
         this.state.append(value);
+
     }
 
     updateRender(change) {
@@ -65,9 +66,10 @@ export class Component extends HTMLElement {
                             } else {
                                 memo.get(key).add(childNode);
                             }
-                            if (childNode[attr] !== state.get(key)) {
-                                childNode[attr] = state.get(key);
 
+                            const value = typeof state.get(key) === 'function' ? state.get(key).call(this) : state.get(key);
+                            if (childNode[attr] !== value) {
+                                childNode[attr] = value;
                             }
                         }
                     } else if (key.match('::')) {
@@ -104,7 +106,6 @@ export class Component extends HTMLElement {
         this.render();
         // subscribe for updates
         this.state.subscribe(this.updateRender.bind(this));
-
     }
 
     // render on mount

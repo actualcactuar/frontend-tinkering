@@ -8,8 +8,10 @@ export class Proto extends Component {
             test: 'asd',
             button: 'button label!',
             objectValue: { foo: 'babababaaa' },
-            inputValue: "",
+            inputValue: "asd",
             list: [{ val: "one" }, "two", "three"],
+            labelName: "label!",
+            testClassList: "yks kaks",
         }
     }
 
