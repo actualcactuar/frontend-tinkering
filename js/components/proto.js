@@ -13,10 +13,6 @@ export class Proto extends Component {
         }
     }
 
-    onRender() {
-        this.appendState({ elem: this.querySelector("#target") })
-    }
-
     handleClick() {
         console.log('CLICK')
         this.appendState({ foo: 'test', button: 'update label!' });

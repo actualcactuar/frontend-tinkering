@@ -95,14 +95,10 @@ export class Component extends HTMLElement {
         } else {
             bindTemplateDatasets(children)
         }
-
-        if (this.onRender) {
-            this.onRender();
-        }
     }
 
     init() {
-        const state = this.useState && this.useState();
+        const state = this.useState && this.useState() || {};
         this.state = new State(state);
         // initial render
         this.render();
