@@ -1,7 +1,7 @@
 import { Component } from '/js/lib/Component.js';
 
 export class Proto extends Component {
-    
+
     useState() {
         return {
             foo: 'bar',
@@ -11,7 +11,16 @@ export class Proto extends Component {
             inputValue: "asd",
             list: [{ val: "one" }, "two", "three"],
             labelName: "label!",
-            testClassList: () => "yks kaks",
+            testClassList: () => "foo",
+        }
+    }
+
+    useObservers() {
+        return {
+            inputValue: (value) => {
+                const testClassList = value ? 'JEE' : 'NOOO';
+                return { testClassList }
+            }
         }
     }
 
