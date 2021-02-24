@@ -11,7 +11,7 @@ export class Proto extends Component {
             inputValue: "asd",
             list: [{ val: "one" }, "two", "three"],
             labelName: "label!",
-            testClassList: "yks kaks",
+            testClassList: () => "yks kaks",
         }
     }
 
