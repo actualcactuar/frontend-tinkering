@@ -1,9 +1,9 @@
-import { Component } from '/js/lib/Component.js'
+import { Component } from '/js/lib/Component.js';
 
 export class Proto extends Component {
     constructor() {
         super();
-        this.initState({ foo: 'bar', test: 'asd', button: 'button label!', objectValue: { foo: 'babababaaa' } });
+        this.initState({ foo: 'bar', test: 'asd', button: 'button label!', objectValue: { foo: 'babababaaa' }, inputValue: "" });
     }
 
     handleClick() {
