@@ -14,12 +14,17 @@
         <template>
           <p data-inner-text="foo"></p>
           <p data-inner-text="test"></p>
-          <input data-oninput="handleInput">
-          <input readonly data-value="inputValue">
+          <input data-oninput="handleInput" data-value="inputValue">
+          <input data-oninput="handleInput" data-value="inputValue">
           <p data-inner-text="inputValue"></p>
           <p data-inner-text="inputValue"></p>
           <p data-inner-text="labelName"></p>
           <p data-inner-text="objectValue::foo"></p>
+          <ul>
+            <li data-inner-text="list::0"></li>
+            <li data-inner-text="list::1"></li>
+            <li data-inner-text="list::2"></li>
+          </ul>
           <button
             data-onclick="handleClick"
             data-inner-text="button"
