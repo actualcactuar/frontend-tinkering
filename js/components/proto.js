@@ -9,7 +9,7 @@ export class Proto extends Component {
             button: 'button label!',
             objectValue: { foo: 'babababaaa' },
             inputValue: "",
-            list: ["one", "two", "three"]
+            list: [{ val: "one" }, "two", "three"]
         });
     }
 
