@@ -96,22 +96,22 @@ export class Component extends HTMLElement {
             bindTemplateDatasets(children)
         }
 
-        if(this.onRender){
+        if (this.onRender) {
             this.onRender();
         }
     }
 
-    init(){
+    init() {
         const state = this.useState && this.useState();
-        if(state){
-            this.state = new State(state);
-            // initial render
-            this.render();
-            // subscribe for updates
-            this.state.subscribe(this.updateRender.bind(this));
-        }
+        this.state = new State(state);
+        // initial render
+        this.render();
+        // subscribe for updates
+        this.state.subscribe(this.updateRender.bind(this));
+
     }
 
+    // render on mount
     connectedCallback() {
         this.init();
     }
