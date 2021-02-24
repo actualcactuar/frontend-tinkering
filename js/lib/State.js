@@ -13,6 +13,15 @@ export class State {
        if(key) return key && this.value[key] || null;
        return this.value;
     }
+    
+    append(value){
+        if (!(typeof value === 'object') || !(typeof this.value === 'object')) {
+            console.warn(`State and value need to be spreadable in order to append`);
+        }
+        const newValue = this.value = typeof value === 'function' ? value(this.value) : value;
+        this.value = {...this.value, ...newValue};
+        this.subscriptions.forEach(callback => typeof callback === 'function' && callback(this.value, value))
+    }
 
     unsubscribe(callback) {
         this.subscriptions.delete(callback);
@@ -20,6 +29,5 @@ export class State {
 
     subscribe(callback) {
         this.subscriptions.add(callback);
-        callback(this.value);
     }
 }

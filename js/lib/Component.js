@@ -9,28 +9,29 @@ export class Component extends HTMLElement {
     }
 
     appendState(value) {
-        if (!(typeof value === 'object') || !(typeof this.state === 'object')) {
-            console.warn(`State and value need to be spreadable in order to append`);
-        }
-        this.state.set(state => ({ ...state, ...value }));
-        this.updateRender(value);
+        this.state.append(value);
     }
 
     initState(value) {
+        // create new state
         this.state = new State(value);
+        // initial render
         this.render();
-        // this.state.subscribe(this.render.bind(this));
+        // subscribe for updates
+        this.state.subscribe(this.updateRender.bind(this));
     }
 
     updateRender(change) {
-        console.log(`%c🚀 Updating "${this.constructor.name}" component values "${Object.keys(change)}"`,'background-color:#1aa87d; padding: 4px;')
+        console.log(`%c🚀 Updating "${this.constructor.name}" component values "${Object.keys(change)}"`, 'background-color:#1aa87d; padding: 4px;')
         const { memo } = this;
         for (const [key, value] of Object.entries(change)) {
             if (memo.has(key)) {
-                const node = memo.get(key);
-                for (const attr of Object.keys(node.dataset)) {
-                    if (node[attr] !== memo.get(key)) {
-                        node[attr] = value;
+                const set = memo.get(key);
+                for (const node of set) {
+                    for (const [attrKey, attrVal] of Object.entries(node.dataset)) {
+                        if (attrVal === key && node[attrKey] !== value) {
+                            node[attrKey] = value;
+                        }
                     }
                 }
             } else {
@@ -43,8 +44,9 @@ export class Component extends HTMLElement {
     }
 
 
-    render() {
-        console.log(`%c🚀 Rendering "${this.constructor.name}" component`,'background-color:#1aa87d; padding: 4px;')
+    render(val, change) {
+        console.log({ val, change })
+        console.log(`%c🚀 Rendering "${this.constructor.name}" component`, 'background-color:#1aa87d; padding: 4px;')
         const { template, state, memo } = this;
         if (!template || !state) {
             throw new Error("Template and sate are required for render");
@@ -68,7 +70,10 @@ export class Component extends HTMLElement {
                             }
                         } else { // use components state
                             if (!memo.has(key)) {
-                                memo.set(key, childNode);
+                                const set = new Set().add(childNode);
+                                memo.set(key, set);
+                            } else {
+                                memo.get(key).add(childNode);
                             }
                             if (childNode[attr] !== state.get(key)) {
                                 childNode[attr] = state.get(key);
