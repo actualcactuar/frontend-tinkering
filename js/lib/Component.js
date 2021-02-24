@@ -12,15 +12,6 @@ export class Component extends HTMLElement {
         this.state.append(value);
     }
 
-    initState(value) {
-        // create new state
-        this.state = new State(value);
-        // initial render
-        this.render();
-        // subscribe for updates
-        this.state.subscribe(this.updateRender.bind(this));
-    }
-
     updateRender(change) {
         console.log(`%c🚀 Updating "${this.constructor.name}" component values "${Object.keys(change)}"`, 'background-color:#1aa87d; padding: 4px;')
         const { memo } = this;
@@ -44,8 +35,7 @@ export class Component extends HTMLElement {
     }
 
 
-    render(val, change) {
-        console.log({ val, change })
+    render() {
         console.log(`%c🚀 Rendering "${this.constructor.name}" component`, 'background-color:#1aa87d; padding: 4px;')
         const { template, state, memo } = this;
         if (!template || !state) {
@@ -105,6 +95,25 @@ export class Component extends HTMLElement {
         } else {
             bindTemplateDatasets(children)
         }
+
+        if(this.onRender){
+            this.onRender();
+        }
+    }
+
+    init(){
+        const state = this.useState && this.useState();
+        if(state){
+            this.state = new State(state);
+            // initial render
+            this.render();
+            // subscribe for updates
+            this.state.subscribe(this.updateRender.bind(this));
+        }
+    }
+
+    connectedCallback() {
+        this.init();
     }
 }
 

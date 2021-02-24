@@ -1,16 +1,20 @@
 import { Component } from '/js/lib/Component.js';
 
 export class Proto extends Component {
-    constructor() {
-        super();
-        this.initState({
+    
+    useState() {
+        return {
             foo: 'bar',
             test: 'asd',
             button: 'button label!',
             objectValue: { foo: 'babababaaa' },
             inputValue: "",
-            list: [{ val: "one" }, "two", "three"]
-        });
+            list: [{ val: "one" }, "two", "three"],
+        }
+    }
+
+    onRender() {
+        this.appendState({ elem: this.querySelector("#target") })
     }
 
     handleClick() {
