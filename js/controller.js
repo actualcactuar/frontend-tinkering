@@ -1,5 +1,6 @@
 import { ClientScope } from '/js/lib/BetterWorker.js'
 import { State } from '/js/lib/State.js'
+import { ElementState } from '/js/lib/ElementState.js';
 
 const model = new ClientScope('js/model.js', { type: 'module' });
 const view = new ClientScope('js/view.js', { type: 'module' });
@@ -16,3 +17,13 @@ state.subscribe(value => {
 })
 state.set("foo");
 state.set(value => value.concat("asdasdasd"))
+
+
+const estate = new ElementState('.bindme', { foo: { bar: 'nested state' }, asd: 'test' });
+console.log(estate)
+estate.set({ foo: 'bar', asd: 'test' });
+estate.on('click', (event) => {
+    console.log({ event });
+    estate.set({ foo: 'adwijjoiawiofaf', bar: 'awidojogifa' })
+})
+console.log({ estate })
