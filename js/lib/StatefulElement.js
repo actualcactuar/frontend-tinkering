@@ -1,22 +1,22 @@
 import { State } from '/js/lib/State.js';
 
-export class ElementState extends State {
+export class StatefulElement extends State {
     constructor(selector, state) {
-        super(state)
+        super(state);
         this.nodeList = document.querySelectorAll(selector);
         this.render();
         this.subscribe(this.render.bind(this));
         return this;
     }
 
-    render() {
+    render(change) {
         this.nodeList.forEach(element => {
             for (const entry of Object.entries(element.dataset)) {
                 const [attr, key] = entry;
-
                 const value = key.match('::') && key.split('::').reduce((acc, curr) => acc && acc[curr] || this.get(curr), null) || this.get(key)
-                console.log({value})
-                if (value) {
+                console.log({ attr, key, value })
+                // update only if different
+                if (value && element[attr] !== value) {
                     element[attr] = value;
                 }
             }

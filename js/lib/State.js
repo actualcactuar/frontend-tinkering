@@ -19,8 +19,9 @@ export class State {
         if (!(typeof value === 'object') || !(typeof this.value === 'object')) {
             console.warn(`State and value need to be spreadable in order to append`);
         }
-        const newValue = this.value = typeof value === 'function' ? value(this.value) : value;
+        const newValue = typeof value === 'function' ? value(this.value) : value;
         this.value = { ...this.value, ...newValue };
+
         Object.keys(newValue).forEach((key) => {
             if (this.observers.has(key)) {
                 for (const observer of this.observers.get(key)) {
@@ -31,7 +32,8 @@ export class State {
                 }
             }
         })
-        this.subscriptions.forEach(callback => typeof callback === 'function' && callback(this.value, value))
+        this.subscriptions.forEach(callback => typeof callback === 'function' && callback(this.value, value));
+        console.log(this.value)
     }
 
     observe(key, callback) {
