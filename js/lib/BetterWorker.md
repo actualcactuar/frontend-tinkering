@@ -1,4 +1,4 @@
-# BetterPostMessage
+# BetterWorker
 
 Wrapper for browsers `postMessage` API for communicating with other entities.
 
@@ -7,15 +7,14 @@ Wrapper for browsers `postMessage` API for communicating with other entities.
 ```javascript
 // client.js
 
-import { Client } from 'BetterPostMessage';
-const worker = new Worker('worker.js', { type: 'module' });
-const client = new Client(worker);
+import { ClientScope } from 'BetterWorker';
+const client = new ClientScope('worker.js', { type: 'module' });
 
-// emit event with payload to worker
+// emit event with payload to worker. Returns a promise so wait on that or subscribe
 client.emit('ping', { foo: 'bar' });
 
-// you can subsribe from multiple places for the event ocurances
-client.subscirbe('ping', (result) => {
+// you can subscribe from multiple places for the event ocurances
+client.subscribe('ping', (result) => {
   console.log(result); // 'pong'
 });
 
@@ -26,18 +25,18 @@ console.log(result); // 'pong'
 
 ```javascript
 // worker.js
-import { Endpoint } from 'BetterPostMessage';
+import { WorkerScope } from 'BetterWorker';
 
-const endpoint = new Endpoint();
+const scope = new WorkerScope();
 
 // Worker only registers a single handler for event, if multiple are registered old is overwritten
-endpoint.on('ping', (data) => {
+scope.on('ping', (data) => {
   console.log(data); // {foo:'bar'}
   return 'pong';
 });
 
 // default callback is called when no event handler is found, event is the default postMessage event.data
-endpoint.default((data) => {
+scope.default((data) => {
   console.log('No logic here');
 });
 ```
