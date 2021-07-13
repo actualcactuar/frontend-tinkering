@@ -110,10 +110,12 @@ export class Component extends HTMLElement {
     this.state = new State(state);
 
     const observers = this.useObservers && this.useObservers();
-    Object.entries(observers).forEach((entry) => {
-      const [key, callback] = entry;
-      this.state.observe(key, callback);
-    });
+    if (observers) {
+      Object.entries(observers).forEach((entry) => {
+        const [key, callback] = entry;
+        this.state.observe(key, callback);
+      });
+    }
     // initial render
     this.render();
     // subscribe for updates

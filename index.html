@@ -10,30 +10,28 @@
   </head>
   <body>
     <div id="app">
-      <p data-inner-text="foo::bar" data-class-list="asd" class="bindme"></p>
-      <p data-class-list="asd" class="bindme" data-onclick="handleClick">
-        click me
-      </p>
-      <p data-inner-text="asd" data-class-list="asd" class="bindme"></p>
-      <hr />
-      <proto-elem>
+      <h3>
+        Stateful input element with custom element constructor and template
+        element
+      </h3>
+      <proto-input>
         <template>
-          <p data-inner-text="foo"></p>
-          <p data-inner-text="test" data-class-list="testClassList"></p>
-          <input data-oninput="handleInput" data-value="inputValue" />
-          <input data-oninput="handleInput" data-value="inputValue" />
-          <p data-inner-text="inputValue"></p>
-          <p data-inner-text="inputValue"></p>
-          <p data-inner-text="labelName"></p>
-          <p data-inner-text="objectValue::foo"></p>
+          <input data-oninput="handleInput" data-class-list="classNames" />
+          <p>Input value is: <span data-inner-text="inputValue"></span></p>
+        </template>
+      </proto-input>
+      <h3>Render example</h3>
+      <proto-list>
+        <template>
           <ul>
-            <li data-inner-text="list::0::val"></li>
+            <li data-inner-text="list::0"></li>
             <li data-inner-text="list::1"></li>
             <li data-inner-text="list::2"></li>
           </ul>
-          <button data-onclick="handleClick" data-inner-text="button"></button>
         </template>
-      </proto-elem>
+      </proto-list>
+      <h3>Worker example</h3>
+      <button type="button" id="workerbutton">Send ping to worker</button>
     </div>
     <script type="module" defer src="js/components/index.js"></script>
     <script type="module" defer src="js/main.js"></script>

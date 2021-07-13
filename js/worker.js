@@ -2,10 +2,10 @@ import { WorkerScope } from '/js/lib/BetterWorker.js';
 
 const scope = new WorkerScope();
 
-scope.default((data) => {
+scope.default(() => {
   return 'reached default message handler';
 });
 
-scope.task('foo', () => {
-  return 'piupau';
+scope.task('ping', () => {
+  return 'pong';
 });

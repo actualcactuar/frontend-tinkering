@@ -1,0 +1,30 @@
+:root {
+  --font-body: 400 1rem Helvetica, Arial, sans-serif;
+  --font-title: 200 2rem Helvetica, Arial, sans-serif;
+  --palette-background: #f7faff;
+  --palette-foreground: #f9fdff;
+  --palette-text: #323232;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --palette-background: #323232;
+    --palette-foreground: #272727;
+    --palette-text: #fefefe;
+  }
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  font: var(--font-body);
+  background-color: var(--palette-background);
+  color: var(--palette-text);
+}
+input {
+  color: inherit;
+  background-color: inherit;
+}

@@ -1,1 +1,2 @@
-export * from '/js/components/proto.js';
+export * from '/js/components/protoInput.js';
+export * from '/js/components/protoList.js';
