@@ -1,1 +1,1 @@
-console.log('hello from model!')
+console.log('hello from model!');
