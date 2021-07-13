@@ -1,9 +1,7 @@
 import { ClientScope } from '/js/lib/BetterWorker.js';
-import { State } from '/js/lib/State.js';
 import { StatefulElement } from '/js/lib/StatefulElement.js';
 
-const model = new ClientScope('js/model.js', { type: 'module' });
-const view = new ClientScope('js/view.js', { type: 'module' });
+const view = new ClientScope('js/worker.js', { type: 'module' });
 
 view.execute('foo').then((result) => console.log({ result }));
 

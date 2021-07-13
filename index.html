@@ -11,15 +11,17 @@
   <body>
     <div id="app">
       <p data-inner-text="foo::bar" data-class-list="asd" class="bindme"></p>
-      <p data-class-list="asd" class="bindme" data-onclick="handleClick">click me</p>
+      <p data-class-list="asd" class="bindme" data-onclick="handleClick">
+        click me
+      </p>
       <p data-inner-text="asd" data-class-list="asd" class="bindme"></p>
-      <hr/>
+      <hr />
       <proto-elem>
         <template>
           <p data-inner-text="foo"></p>
           <p data-inner-text="test" data-class-list="testClassList"></p>
-          <input data-oninput="handleInput" data-value="inputValue">
-          <input data-oninput="handleInput" data-value="inputValue">
+          <input data-oninput="handleInput" data-value="inputValue" />
+          <input data-oninput="handleInput" data-value="inputValue" />
           <p data-inner-text="inputValue"></p>
           <p data-inner-text="inputValue"></p>
           <p data-inner-text="labelName"></p>
@@ -29,14 +31,11 @@
             <li data-inner-text="list::1"></li>
             <li data-inner-text="list::2"></li>
           </ul>
-          <button
-            data-onclick="handleClick"
-            data-inner-text="button"
-          ></button>
+          <button data-onclick="handleClick" data-inner-text="button"></button>
         </template>
       </proto-elem>
     </div>
     <script type="module" defer src="js/components/index.js"></script>
-    <script type="module" defer src="js/controller.js"></script>
+    <script type="module" defer src="js/main.js"></script>
   </body>
 </html>

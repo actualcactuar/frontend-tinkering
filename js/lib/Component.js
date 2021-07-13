@@ -31,7 +31,7 @@ export class Component extends HTMLElement {
           }
         }
       } else {
-        console.warn(`UPDATE FAILED on value ${key}, reverting to render`);
+        console.warn(`UPDATE FAILED on value "${key}", reverting to render`);
         this.render();
         break;
       }
