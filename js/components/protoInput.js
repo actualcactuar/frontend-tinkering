@@ -1,4 +1,4 @@
-import { Component } from '/js/lib/Component.js';
+import { Component } from '../lib/Component.js';
 
 export class ProtoInput extends Component {
   // initial state for input

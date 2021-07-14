@@ -1,4 +1,4 @@
-import { State } from '/js/lib/State.js';
+import { State } from './State.js';
 
 export class StatefulElement extends State {
   constructor(selector, state) {

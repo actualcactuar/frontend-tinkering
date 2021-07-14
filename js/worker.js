@@ -1,4 +1,4 @@
-import { WorkerScope } from '/js/lib/BetterWorker.js';
+import { WorkerScope } from './lib/BetterWorker.js';
 
 const scope = new WorkerScope();
 

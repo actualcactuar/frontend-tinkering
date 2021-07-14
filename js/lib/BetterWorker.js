@@ -1,4 +1,4 @@
-import EventEmitter from '/js/lib/EventEmitter.js';
+import EventEmitter from './EventEmitter.js';
 
 export class WorkerScope {
   constructor() {

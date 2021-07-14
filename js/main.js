@@ -1,5 +1,5 @@
-import { ClientScope } from '/js/lib/BetterWorker.js';
-import { StatefulElement } from '/js/lib/StatefulElement.js';
+import { ClientScope } from './lib/BetterWorker.js';
+import { StatefulElement } from './lib/StatefulElement.js';
 
 const workerButton = document.getElementById('workerbutton');
 const view = new ClientScope('js/worker.js', { type: 'module' });
