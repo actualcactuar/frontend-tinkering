@@ -1,5 +1,5 @@
 import { ClientScope } from './lib/BetterWorker.js';
-import { ReactiveView } from './lib/ReactiveView.js';
+import './lib/ReactiveView.js';
 
 const workerButton = document.getElementById('workerbutton');
 const view = new ClientScope('js/worker.js', { type: 'module' });
@@ -14,6 +14,9 @@ view.on('ping', (responseMessage) => {
 
 const blog = document.getElementById('blog');
 const blogData = {
+  list: ['one', 'two', 'three'],
+  link: 'https://google.com',
+  linkText: 'Google',
   palette: {
     primary: 'red',
   },

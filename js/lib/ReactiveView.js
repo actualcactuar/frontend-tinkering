@@ -105,6 +105,11 @@ export class ReactiveView extends HTMLElement {
           this.memo[dataKey] = [childNode];
         }
       }
+
+      // bind childrends children too
+      if (childNode.children.length) {
+        this._dataBind(childNode.children);
+      }
     }
   }
 
