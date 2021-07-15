@@ -31,6 +31,21 @@
       </proto-list>
       <h3>Worker example</h3>
       <button type="button" id="workerbutton">Send ping to worker</button>
+      <h3>Reactive view</h3>
+      <reactive-view id="blog">
+        <template>
+          <h4 data-inner-text="title" data-class-list="title"></h4>
+          <p data-inner-text="body"></p>
+          <h4 data-inner-text="title"></h4>
+          <h4 data-inner-text="title"></h4>
+          <p
+            data-inner-text="body"
+            data-class-list="title"
+            data-style::color="palette::primary"
+          ></p>
+          <p data-inner-text="body"></p>
+        </template>
+      </reactive-view>
     </div>
     <script type="module" defer src="js/components/index.js"></script>
     <script type="module" defer src="js/main.js"></script>
