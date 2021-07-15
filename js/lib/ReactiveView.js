@@ -7,6 +7,8 @@ export class ReactiveView extends HTMLElement {
 
   setDataSource(dataSource) {
     this.dataSource = dataSource;
+
+    // DONT RENDER IF NOT MOUNTED
     this.render();
   }
 
@@ -38,6 +40,7 @@ export class ReactiveView extends HTMLElement {
   updateSingeDataSource(key, value) {
     this._validateDataSource();
     this._validateDataKey(key);
+    // @ALLOW ONLY WHEN MOUNTED?
 
     const [main, sub] = key.split('::');
 
@@ -128,6 +131,8 @@ export class ReactiveView extends HTMLElement {
     console.log(this.memo);
     console.timeEnd(`Render time for <rective-view id="${this.id}"> was`);
   }
+
+  // @ TODO RENDER ON MOUNT
 }
 
 customElements.define('reactive-view', ReactiveView);
